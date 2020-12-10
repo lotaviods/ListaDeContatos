@@ -8,6 +8,6 @@ class ControllerTeste extends AbstractController
 {
     public function index()
     {
-        return new Response("Teste primeira pagina");
+        return $this->render('Index\Index.html.twig');
     }
 }
