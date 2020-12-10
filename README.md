@@ -1,3 +1,3 @@
 # ListaDeContatos
 
-## Lista de contatos utilizando API com Symfony
+### Lista de contatos utilizando API com Symfony
