@@ -16,13 +16,20 @@ class ContatosController
         $this->entityManager = $entityManager;
     }
 
-    public function novoContato(Request $request): Response
+    public function NovoContato(Request $request): Response
     {
         $dadosRequest  = $request->getContent();
-        $entidade  = new Contatos;
+        $dados = json_decode($dadosRequest);
 
+        $entidade  = new Contatos;
+        
+        $entidade->setNome($dados->nome);
+        $entidade->setNumero($dados->numero);
+        $entidade->setEmail($dados->email);
         $this->entityManager->persist($entidade);
 
+        $this->entityManager->flush();
+        return new Response();
         
     }
 }
