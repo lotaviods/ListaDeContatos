@@ -1,3 +1,8 @@
-index:
+index_HTML:
     path: /
-    controller: App\Controller\ControllerTeste::index
+    controller: App\Controller\ControllerTeste::Index
+    methods: GET
+AddNumero_API:
+    path: /api/
+    controller: App\Controller\ContatosController::NovoContato
+    methods: POST
