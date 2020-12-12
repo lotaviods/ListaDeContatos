@@ -2,18 +2,24 @@
 
 namespace App\Controller;
 
+use Throwable;
 use App\Entity\Contatos;
+use App\Helper\Validadores;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ContatosController
 {
     protected $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    protected $validadores;
+
+    public function __construct(EntityManagerInterface $entityManager, Validadores $validadores)
     {
         $this->entityManager = $entityManager;
+        $this->validadores = $validadores;
     }
 
     public function NovoContato(Request $request): Response
@@ -22,34 +28,19 @@ class ContatosController
         $dados = json_decode($dadosRequest);
 
         $entidade  = new Contatos;
-        
+
+        $this->validadores->validadeNomeNoController($dados->nome);
         $entidade->setNome($dados->nome);
+
+        $this->validadores->validaNumeroNoController($dados->numero);
         $entidade->setNumero($dados->numero);
+
+        $this->validadores->validaEmailNoController($dados->email);
         $entidade->setEmail($dados->email);
         $this->entityManager->persist($entidade);
 
         $this->entityManager->flush();
         return new Response();
-        
     }
+
 }
-
-
-
-
-
-
-
-
-
-// public function celular($numero)
-//     {
-//         $numero = trim(str_replace('/', '', str_replace(' ', '', str_replace('-', '', str_replace(')', '', str_replace('(', '', $numero))))));
-
-//         $regexCel = '/[0-9]{2}[6789][0-9]{3,4}[0-9]{4}/'; // Regex para validar somente celular
-//         if (preg_match($regexCel, $numero)) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     }

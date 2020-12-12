@@ -26,7 +26,7 @@ class Contatos
      * @ORM\Column(type= "string")
      */
 
-    private int $numero;
+    private string $numero;
 
     /**
     * @ORM\Column(type= "string")
