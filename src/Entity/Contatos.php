@@ -16,23 +16,23 @@ class Contatos implements JsonSerializable
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\Column(type= "string")
      */
-    private String $nome;
+    public String $nome;
 
     /**
      * @ORM\Column(type= "string")
      */
 
-    private string $numero;
+    public string $numero;
 
     /**
     * @ORM\Column(type= "string")
      */
-    private String $email;
+    public String $email;
 
 
     public function getId(): ?int
