@@ -2,7 +2,13 @@ index_HTML:
     path: /
     controller: App\Controller\ControllerHtml::Index
     methods: GET
-AddNumero_API:
+
+AddContato_API:
     path: /api/
     controller: App\Controller\ContatosController::NovoContato
     methods: POST
+
+listarContato_API:
+    path: /api/listarContatos/
+    controller: App\Controller\ContatosController::buscarContatos
+    methods: GET
