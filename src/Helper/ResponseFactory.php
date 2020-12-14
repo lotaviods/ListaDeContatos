@@ -23,7 +23,7 @@ class ResponseFactory
         $this->conteudoResposta = $conteudoResposta;
         $this->statusResposta = $statusResposta;
         $this->paginaAtual = $paginaAtual;
-        $this->$itemPorPagina = $$itemPorPagina;
+        $this->$itemPorPagina = $itemPorPagina;
     }
 
     public function getResponse(): JsonResponse
