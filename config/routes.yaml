@@ -1,6 +1,6 @@
 index_HTML:
     path: /
-    controller: App\Controller\ControllerTeste::Index
+    controller: App\Controller\ControllerHtml::Index
     methods: GET
 AddNumero_API:
     path: /api/
