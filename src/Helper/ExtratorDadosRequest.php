@@ -37,7 +37,7 @@ class ExtratorDadosRequest
 
     public function infoPaginacao(Request $request)
     {
-        [,$paginaAtual,$itensPorPagina] = $this->buscadorDadosRequest($request);
+        [, ,$paginaAtual,$itensPorPagina] = $this->buscadorDadosRequest($request);
 
         return [$paginaAtual, $itensPorPagina];
     }

@@ -52,7 +52,7 @@ class ContatosController
         $this->entityManager->flush();
         return new Response();
     }
-    public function buscarContatos(Request $request)
+    public function buscarContatos(Request $request): Response
     {
         $ordenacao = $this->extratorRequest->buscadorDadosOrdenacao($request);
 
@@ -60,8 +60,8 @@ class ContatosController
 
         [$paginaAtual, $itensPorPagina] = $this->extratorRequest->infoPaginacao($request);
 
-        $lista = $this->repository->findBy( $filtro,$ordenacao, $itensPorPagina, (($paginaAtual-1) * $itensPorPagina));
-            
+        $lista = $this->repository->findBy($filtro, $ordenacao,$itensPorPagina,($paginaAtual-1)* $itensPorPagina);
+        
         $responseFactory = new ResponseFactory(true, $lista, Response::HTTP_OK, $paginaAtual, $itensPorPagina);
 
         return $responseFactory->getResponse();

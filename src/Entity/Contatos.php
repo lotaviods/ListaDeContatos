@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ContatosRepository;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass=ContatosRepository::class)
  */
-class Contatos
+class Contatos implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -73,6 +74,20 @@ class Contatos
         $this->email = $email;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'nome' => $this->getNome(),
+            'numero' => $this->getNumero(),
+
+            '_links' => [
+                    'rel' => 'listarContato_API',
+                    'path' => '/api/listarContatos/' . $this->getId()
+                ],
+        ];
     }
     
 }
