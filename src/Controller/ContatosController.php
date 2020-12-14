@@ -4,22 +4,31 @@ namespace App\Controller;
 
 use Throwable;
 use App\Entity\Contatos;
+use App\Helper\ExtratorDadosRequest;
 use App\Helper\Validadores;
+use App\Repository\ContatosRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Helper\ResponseFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Config\Definition\Exception\Exception;
+
 
 class ContatosController
 {
-    protected $entityManager;
+    private $entityManager;
 
-    protected $validadores;
+    private $validadores;
 
-    public function __construct(EntityManagerInterface $entityManager, Validadores $validadores)
+    private $extratorRequest;
+
+    private $repository;
+
+    public function __construct(EntityManagerInterface $entityManager, Validadores $validadores, ExtratorDadosRequest $extratorRequest,ContatosRepository $repository )
     {
         $this->entityManager = $entityManager;
         $this->validadores = $validadores;
+        $this->extratorRequest = $extratorRequest;
+        $this->repository = $repository;
     }
 
     public function NovoContato(Request $request): Response
@@ -37,10 +46,24 @@ class ContatosController
 
         $this->validadores->validaEmailNoController($dados->email);
         $entidade->setEmail($dados->email);
+
         $this->entityManager->persist($entidade);
 
         $this->entityManager->flush();
         return new Response();
     }
+    public function buscarContatos(Request $request)
+    {
+        $ordenacao = $this->extratorRequest->buscadorDadosOrdenacao($request);
 
+        $filtro = $this->extratorRequest->bucadorDadosFiltro($request);
+
+        [$paginaAtual, $itensPorPagina] = $this->extratorRequest->infoPaginacao($request);
+
+        $lista = $this->repository->findBy( $filtro,$ordenacao, $itensPorPagina, (($paginaAtual-1) * $itensPorPagina));
+            
+        $responseFactory = new ResponseFactory(true, $lista, Response::HTTP_OK, $paginaAtual, $itensPorPagina);
+
+        return $responseFactory->getResponse();
+    }
 }
