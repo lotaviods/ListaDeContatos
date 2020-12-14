@@ -1,6 +1,6 @@
 <?php
 
-namespace Helper;
+namespace App\Helper;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class ResponseFactory
         $this->conteudoResposta = $conteudoResposta;
         $this->statusResposta = $statusResposta;
         $this->paginaAtual = $paginaAtual;
-        $this->$itemPorPagina = $$itemPorPagina;
+        $this->$itemPorPagina = $itemPorPagina;
     }
 
     public function getResponse(): JsonResponse
@@ -41,6 +41,11 @@ class ResponseFactory
 
         return new JsonResponse ($conteudoResposta,$this->statusResposta);
     }
+    public static function Erro(\Throwable $erro)
+    {
+        return new self(false, ['mensagem' => $erro->getMessage()]);
+    }
+
 
 
 }
