@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use Throwable;
 use App\Entity\Contatos;
-use App\Helper\ExtratorDadosRequest;
 use App\Helper\Validadores;
+use App\Helper\ResponseFactory;
+use App\Helper\ExtratorDadosRequest;
 use App\Repository\ContatosRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Helper\ResponseFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -66,4 +66,6 @@ class ContatosController
 
         return $responseFactory->getResponse();
     }
+
+    
 }

@@ -3,12 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ContatosRepository;
 use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass=ContatosRepository::class)
- */
+ */ 
 class Contatos implements JsonSerializable
 {
     /**
