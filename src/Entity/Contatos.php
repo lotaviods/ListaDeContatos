@@ -15,7 +15,7 @@ class Contatos implements JsonSerializable
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    public $id;
+    public int $id;
 
     /**
      * @ORM\Column(type= "string")
@@ -81,10 +81,11 @@ class Contatos implements JsonSerializable
             'id' => $this->getId(),
             'nome' => $this->getNome(),
             'numero' => $this->getNumero(),
+            'email' => $this->getEmail(),
 
             '_links' => [
                     'rel' => 'listarContato_API',
-                    'path' => '/api/listarContatos/' . $this->getId()
+                    'path' => '/api/contatos/' . $this->getId()
                 ],
         ];
     }

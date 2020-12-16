@@ -9,6 +9,16 @@ AddContato_API:
     methods: POST
 
 listarContato_API:
-    path: /api/listarContatos/
+    path: /api/contatos/
     controller: App\Controller\ContatosController::buscarContatos
     methods: GET
+
+listarUmContato_API:
+    path: /api/contatos/{id}
+    controller: App\Controller\ContatosController::buscarUmContato
+    methods: GET
+
+editarUmContato_API:
+    path: /api/contatos/{id}
+    controller: App\Controller\ContatosController::editarContato
+    methods: PUT

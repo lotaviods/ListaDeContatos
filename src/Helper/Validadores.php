@@ -35,7 +35,7 @@ class Validadores
         }
     }
 
-    public function celular($numero)
+    private function celular($numero)
     {
         $numero = trim(str_replace('/', '', str_replace(' ', '', str_replace('-', '', str_replace(')', '', str_replace('(', '', $numero))))));
 
@@ -47,7 +47,7 @@ class Validadores
         }
     }
 
-    public function email($email)
+    private function email($email)
     {
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
@@ -56,7 +56,7 @@ class Validadores
         }
     }
 
-    public function nome($nome)
+    private function nome($nome)
     {
         if(strlen($nome)<=3){
             return false;
