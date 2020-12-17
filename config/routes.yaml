@@ -22,3 +22,8 @@ editarUmContato_API:
     path: /api/contatos/{id}
     controller: App\Controller\ContatosController::editarContato
     methods: PUT
+
+excluirUmContato_API:
+    path: /api/contatos/{id}
+    controller: App\Controller\ContatosController::excluirContato
+    methods: DELETE

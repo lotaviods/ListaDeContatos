@@ -15,7 +15,7 @@ class Contatos implements JsonSerializable
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    public int $id;
+    public ?int $id;
 
     /**
      * @ORM\Column(type= "string")

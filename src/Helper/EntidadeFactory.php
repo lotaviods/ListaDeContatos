@@ -2,32 +2,42 @@
 
 namespace App\Helper;
 
-use App\Entity\Contatos;
 use Exception;
+use App\Entity\Contatos;
+use App\Repository\ContatosRepository;
 
 class EntidadeFactory
 {
+    protected $repository;
+
+    public function __construct(ContatosRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function criarEntidade(string $json){
 
         $dadosEmJson = json_decode($json);
-        $this->checkAllProperties($dadosEmJson);
 
         $contato = new Contatos();
         $contato->setNome($dadosEmJson->nome)->setNumero($dadosEmJson->numero)->setEmail($dadosEmJson->email);
       
         return $contato;
     }
-    private function checkAllProperties(object $dadosEmJson)
-    {
-        if(!property_exists($dadosEmJson, 'nome')){
-            throw new Exception('Contato precisa de nome');
-        } 
-        if(!property_exists($dadosEmJson, 'numero')){
-            throw new Exception('Contato precisa de número');
-        } 
-        if(!property_exists($dadosEmJson,'email')){
 
-            throw new Exception('Contato preicsa de e-mail');
+    public function atualizarEntidadeExistente(int $id, $entidade)
+    {
+          /** @var Contatos $entidadeExistente */
+          
+          $entidadeExistente = $this->repository->find($id);
+
+        if(is_null($entidadeExistente)){
+            throw new \InvalidArgumentException();
         }
+
+        $entidadeExistente->setNome($entidade->getNome())->setNumero($entidade->getNumero())->setEmail($entidade->getEmail());
+        
+        return $entidadeExistente;
     }
+
 }

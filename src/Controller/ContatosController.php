@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Helper\Cacher;
 use App\Entity\Contatos;
 use App\Helper\Validadores;
 use App\Helper\EntidadeFactory;
@@ -29,11 +30,13 @@ class ContatosController
 
     private $factory;
 
+    private $cacher;
+
     public function __construct(EntityManagerInterface $entityManager, 
                                 Validadores $validadores, 
                                 ExtratorDadosRequest $extratorRequest,
                                 ContatosRepository $repository ,CacheItemPoolInterface $cache,
-                                EntidadeFactory $factory)
+                                EntidadeFactory $factory, Cacher $cacher)
 
     {
         $this->entityManager = $entityManager;
@@ -42,6 +45,7 @@ class ContatosController
         $this->repository = $repository;
         $this->cache = $cache;
         $this->factory = $factory;
+        $this->cacher = $cacher;
     }
 
     public function NovoContato(Request $request): JsonResponse
@@ -79,7 +83,7 @@ class ContatosController
 
    public function buscarUmContato(int $id)
     {
-        $entidade = $this->cache->hasItem($this->cachePrefix() . $id)? $this->cache->getItem($this->cachePrefix(). $id)->get()
+        $entidade = $this->cache->hasItem($this->cacher->cachePrefix() . $id)? $this->cache->getItem($this->cacher->cachePrefix(). $id)->get()
         :$this->repository->find($id);
         $statusReposta = is_null($entidade) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
         $fabricaResposta = new  ResponseFactory(true, $entidade, $statusReposta);
@@ -90,37 +94,37 @@ class ContatosController
     {
         $entidade = $this->factory->criarEntidade($request->getContent());
 
-        $entidadeExistente = $this->atualizarEntidadeExistente($id,$entidade);
+        $entidadeExistente = $this->factory->atualizarEntidadeExistente($id,$entidade);
+
+        $this->validadores->validadeNomeNoController($entidade->nome);
+        $entidadeExistente->setNome($entidade->nome);
+
+        $this->validadores->validaNumeroNoController($entidade->numero);
+        $entidadeExistente->setNumero($entidade->numero);
+
+        $this->validadores->validaEmailNoController($entidade->email);
+        $entidadeExistente->setEmail($entidade->email);
 
         $this->entityManager->persist($entidadeExistente);
         $this->entityManager->flush();
     
-        $cacheItem = $this->cache->getItem($this->cachePrefix() . $id);
+        $cacheItem = $this->cache->getItem($this->cacher->cachePrefix() . $id);
         $cacheItem->set($entidadeExistente);
         $this->cache->save($cacheItem);
        
         return new JsonResponse($entidadeExistente);
-        
     }
 
-    public function atualizarEntidadeExistente(int $id, $entidade)
-    {
-          /** @var Contatos $entidadeExistente */
-          
-          $entidadeExistente = $this->repository->find($id);
+   public function excluirContato(int $id): Response
+   {
+       $entidade = $this->repository->find($id);
 
-        if(is_null($entidadeExistente)){
-            throw new \InvalidArgumentException();
-        }
+       $this->entityManager->remove($entidade);
+       $this->entityManager->flush();
+ 
+       $this->cache->deleteItem($this->cacher->cachePrefix() . $id);
 
-        $entidadeExistente->setNome($entidade->getNome())->setNumero($entidade->getNumero())->setEmail($entidade->getEmail());
-        
-        return $entidadeExistente;
-    }
-
-    public function cachePrefix(): string
-    {
-        return 'contato_';
-    }
+       return new Response('', Response::HTTP_NO_CONTENT);
+   } 
 
 }
