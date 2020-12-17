@@ -44,26 +44,23 @@ class ContatosController
         $this->factory = $factory;
     }
 
-    public function NovoContato(Request $request): Response
+    public function NovoContato(Request $request): JsonResponse
     {
-        $dadosRequest  = $request->getContent();
-        $dados = json_decode($dadosRequest);
+        $entidade  = $this->factory->criarEntidade($request->getContent());
 
-        $entidade  = new Contatos;
+        $this->validadores->validadeNomeNoController($entidade->nome);
+        $entidade->setNome($entidade->nome);
 
-        $this->validadores->validadeNomeNoController($dados->nome);
-        $entidade->setNome($dados->nome);
+        $this->validadores->validaNumeroNoController($entidade->numero);
+        $entidade->setNumero($entidade->numero);
 
-        $this->validadores->validaNumeroNoController($dados->numero);
-        $entidade->setNumero($dados->numero);
-
-        $this->validadores->validaEmailNoController($dados->email);
-        $entidade->setEmail($dados->email);
+        $this->validadores->validaEmailNoController($entidade->email);
+        $entidade->setEmail($entidade->email);
 
         $this->entityManager->persist($entidade);
 
         $this->entityManager->flush();
-        return new Response();
+        return new JsonResponse($entidade);
     }
     public function buscarContatos(Request $request): Response
     {
