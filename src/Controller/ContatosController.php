@@ -27,12 +27,13 @@ class ContatosController
 
     private $cache;
 
-   
+    private $factory;
 
     public function __construct(EntityManagerInterface $entityManager, 
                                 Validadores $validadores, 
                                 ExtratorDadosRequest $extratorRequest,
-                                ContatosRepository $repository ,CacheItemPoolInterface $cache)
+                                ContatosRepository $repository ,CacheItemPoolInterface $cache,
+                                EntidadeFactory $factory)
 
     {
         $this->entityManager = $entityManager;
@@ -40,6 +41,7 @@ class ContatosController
         $this->extratorRequest = $extratorRequest;
         $this->repository = $repository;
         $this->cache = $cache;
+        $this->factory = $factory;
     }
 
     public function NovoContato(Request $request): Response
@@ -87,19 +89,21 @@ class ContatosController
         return $fabricaResposta->getResponse();
     }
 
-    public function editarContato(int $id, Request $request)
+    public function editarContato(int $id, Request $request): JsonResponse
     {
-        $entidade = new Contatos();
+        $entidade = $this->factory->criarEntidade($request->getContent());
+
         $entidadeExistente = $this->atualizarEntidadeExistente($id,$entidade);
 
-        $this->entityManager->persist($entidade);
+        $this->entityManager->persist($entidadeExistente);
         $this->entityManager->flush();
-
+    
         $cacheItem = $this->cache->getItem($this->cachePrefix() . $id);
         $cacheItem->set($entidadeExistente);
         $this->cache->save($cacheItem);
-
-        new JsonResponse ($entidadeExistente);
+       
+        return new JsonResponse($entidadeExistente);
+        
     }
 
     public function atualizarEntidadeExistente(int $id, $entidade)
@@ -107,12 +111,12 @@ class ContatosController
           /** @var Contatos $entidadeExistente */
           
           $entidadeExistente = $this->repository->find($id);
+
         if(is_null($entidadeExistente)){
             throw new \InvalidArgumentException();
         }
 
-        $entidadeExistente->setNome($entidade->getNome()
-        ->setNumero($entidade->getNumero())->setEmail($entidade->getEmail()));
+        $entidadeExistente->setNome($entidade->getNome())->setNumero($entidade->getNumero())->setEmail($entidade->getEmail());
         
         return $entidadeExistente;
     }
@@ -121,4 +125,5 @@ class ContatosController
     {
         return 'contato_';
     }
+
 }
