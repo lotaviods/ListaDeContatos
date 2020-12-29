@@ -1,37 +1,26 @@
 <?php
 namespace App\Helper;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-
 class Validadores
 {
     public function validaNumeroNoController ($dados)
     {
         if($this->celular($dados) === false){
-                throw new Exception("Número de telefone inválido");
-            }  try {    
-        } catch (\Exception $erro) {
-            $erro->getMessage();
-        }
+                throw new AppError("Número de telefone inválido");
+            }
     }
 
     public function validaEmailNoController($dados)
     {
         if($this->email($dados) === false){
-            throw new Exception("e-mail inválido");
-        }try {    
-        } catch (\Exception $erro) {
-            $erro->getMessage();
+            throw new AppError("e-mail inválido");
         }
     }
 
     public function validadeNomeNoController($dados)
     {
         if($this->nome($dados) === false){
-            throw new Exception("Nome inválido, o nome deve ter mais que três caracteres");
-        }try {    
-        } catch (\Exception $erro) {
-            $erro->getMessage();
+            throw new AppError("Nome inválido, o nome deve ter mais que três caracteres");
         }
     }
 
