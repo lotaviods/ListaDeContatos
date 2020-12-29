@@ -20,10 +20,18 @@ class LidadorDeErros implements EventSubscriberInterface
         return [
             KernelEvents::EXCEPTION=>[
                 ['handle404Exception', -1],
-                
+                ['AppError', 1]
                 // Pega todas as Exception, desabilitado pelo log do console não estar funcionando
                 //['handleGenericException', 0]
         ]];
+    }
+    public function AppError(ExceptionEvent $event){
+        if ($event->getThrowable()instanceof AppError)
+        {
+            $this->logger->critical('Uma exceção ocorreu. {stack}', ['stack'=> $event->getThrowable()->getTraceAsString()]);
+            $response = ResponseFactory::Erro($event->getThrowable());
+            $event->setResponse($response->getResponse());
+        }
     }
     public function handle404Exception(ExceptionEvent $event)
     {

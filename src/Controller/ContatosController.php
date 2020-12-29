@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Helper\Cacher;
 use App\Entity\Contatos;
+use App\Helper\AppError;
 use App\Helper\Validadores;
 use App\Helper\EntidadeFactory;
 use App\Helper\ResponseFactory;
 use App\Helper\ExtratorDadosRequest;
+use Doctrine\DBAL\Driver\SQLSrv\Exception\Error;
 use Psr\Cache\CacheItemPoolInterface;
 use App\Repository\ContatosRepository;
+use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,9 +76,12 @@ class ContatosController
         $filtro = $this->extratorRequest->bucadorDadosFiltro($request);
 
         [$paginaAtual, $itensPorPagina] = $this->extratorRequest->infoPaginacao($request);
+        try{
+            $lista = $this->repository->findBy($filtro, $ordenacao,$itensPorPagina,($paginaAtual-1)* $itensPorPagina);
+        }catch (ConnectionException $error){
+            throw new AppError('Erro ao se conectar ao busca ao banco de dados, verifique a existencia do mesmo');
+        }
 
-        $lista = $this->repository->findBy($filtro, $ordenacao,$itensPorPagina,($paginaAtual-1)* $itensPorPagina);
-        
         $responseFactory = new ResponseFactory(true, $lista, Response::HTTP_OK, $paginaAtual, $itensPorPagina);
 
         return $responseFactory->getResponse();
