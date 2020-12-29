@@ -4,7 +4,7 @@ index_HTML:
     methods: GET
 
 AddContato_API:
-    path: /api/
+    path: /api/contatos/
     controller: App\Controller\ContatosController::NovoContato
     methods: POST
 
