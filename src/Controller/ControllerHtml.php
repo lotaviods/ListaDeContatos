@@ -9,16 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ControllerHtml extends AbstractController
 {
-    private $repostitory;
-    public function __construct(ContatosRepository $repository)
-    {
-        $this->repostitory = $repository;
-    }
+
     public function index()
-    {   
-        $contatos = $this->repostitory->findAll();
-        return $this->render('Index\Index.html.twig', [
-            "contatos" => $contatos
-        ]);
+    {
+        return $this->render('Index\Index.html.twig');
     }
 }
