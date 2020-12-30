@@ -69,6 +69,7 @@ class ContatosController
         $this->entityManager->flush();
         return new JsonResponse($entidade);
     }
+    
     public function buscarContatos(Request $request): Response
     {
         $ordenacao = $this->extratorRequest->buscadorDadosOrdenacao($request);
@@ -79,7 +80,7 @@ class ContatosController
         try{
             $lista = $this->repository->findBy($filtro, $ordenacao,$itensPorPagina,($paginaAtual-1)* $itensPorPagina);
         }catch (ConnectionException $error){
-            throw new AppError('Erro ao se conectar ao busca ao banco de dados, verifique a existencia do mesmo');
+            throw new AppError('Erro ao se conectar ao banco de dados, verifique a existencia do mesmo');
         }
 
         $responseFactory = new ResponseFactory(true, $lista, Response::HTTP_OK, $paginaAtual, $itensPorPagina);

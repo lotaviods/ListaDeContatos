@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ControllerHtml extends AbstractController
 {
     private $repostitory;
+
     public function __construct(ContatosRepository $repository)
     {
         $this->repostitory = $repository;
@@ -21,4 +22,5 @@ class ControllerHtml extends AbstractController
             "contatos" => $contatos
         ]);
     }
+
 }
