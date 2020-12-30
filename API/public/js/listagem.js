@@ -1,4 +1,5 @@
-const ul = document.querySelector('#contatos');
+import {listarContatos} from './fetcher.js';
+let ul = document.querySelector('#contatos');
 listarContatos().then(conteudo=>{
     if (!conteudo.sucesso)
         throw new Error('Falha ao carregar contatos');
