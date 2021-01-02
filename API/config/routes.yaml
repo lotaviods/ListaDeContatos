@@ -1,8 +1,7 @@
-index_HTML:
+Angular:
     path: /
-    controller: App\Controller\ControllerHtml::Index
+    controller: App\Controller\Angular::index
     methods: GET
-
 AddContato_API:
     path: /api/contatos/
     controller: App\Controller\ContatosController::NovoContato
