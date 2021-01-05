@@ -15,7 +15,7 @@ class ExtratorDadosRequest
         $paginaAtual = array_key_exists('page', $allQuerys) ? $allQuerys['page'] : 1;
         unset($allQuerys['page']);
         
-        $itensPorPagina = array_key_exists('itensPorPagina', $allQuerys) ? $allQuerys['itensPorPagina'] : 5;
+        $itensPorPagina = array_key_exists('itensPorPagina', $allQuerys) ? $allQuerys['itensPorPagina'] : 1000;
         unset($allQuerys['itensPorPagina']);
 
         return [$infoOrdenacao, $allQuerys, $paginaAtual, $itensPorPagina];
