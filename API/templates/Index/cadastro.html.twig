@@ -7,18 +7,34 @@
 <form data-form>
     <div class="container">
         <div class="form-group">
-            <label>Nome: </label>
-            <input type="text" class="form-control" placeholder="Digite seu nome" />
+              <div class="col col-sm-12 col-md-10">
+                    <div class="input-group  mb-3">
+                        <label class="col col-md-2" id="l_nome">Nome:</label>
+                        <input type="text" class="form-control" placeholder="Digite seu nome" />
+                    </div>
+              </div>
         </div>
+
         <div class="form-group">
-            <label>Email: </label>
-            <input type="text" class="form-control" placeholder="Digite seu email" />
+                <div class="col col-sm-12 col-md-10">
+                    <div class="input-group mb-3">
+                        <label class="col col-md-2"  id="l_email"> Email: </label>
+                        <input type="text" class="form-control" placeholder="Digite seu email" />
+                    </div>
+                </div>
         </div>
+
         <div class="form-group">
-            <label>Numero: </label>
-            <input type="text" class="form-control" placeholder="Digite seu numero" />
+            <div class="col col-sm-12 col-md-10">
+                <div class="input-group mb-3">
+                    <label class="col col-md-2"  id="l_numero">Numero: </label>
+                    <input type="text" class="form-control" placeholder="Digite seu numero" />
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div>
+            <button type="submit" class="btn btn-primary enviar_form">Enviar</button>
+        </div>
     </div>
 </form>
 {% endblock %}

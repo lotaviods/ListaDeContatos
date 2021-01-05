@@ -7,3 +7,22 @@ body {
     color: #ffffff;
     background-color: #000000
 }
+.container {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+}
+.enviar_form{
+    margin-left: 100px;
+    margin-right: auto;
+}
+.list-group-item{
+    background-color: lightslategray;
+}
+#contatos{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+}
