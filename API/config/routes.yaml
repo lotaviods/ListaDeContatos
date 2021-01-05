@@ -1,7 +1,6 @@
-<<<<<<< HEAD:API/config/routes.yaml
 index_HTML:
     path: /
-    controller: App\Controller\ControllerHtml::Index
+    controller: App\Controller\ControllerHtml::index
     methods: GET
 
 cadastro_HTML:
@@ -32,33 +31,4 @@ editarUmContato_API:
 excluirUmContato_API:
     path: /api/contatos/{id}
     controller: App\Controller\ContatosController::excluirContato
-=======
-Angular:
-    path: /
-    controller: App\Controller\Angular::index
-    methods: GET
-AddContato_API:
-    path: /api/contatos/
-    controller: App\Controller\ContatosController::NovoContato
-    methods: POST
-
-listarContato_API:
-    path: /api/contatos/
-    controller: App\Controller\ContatosController::buscarContatos
-    methods: GET
-
-listarUmContato_API:
-    path: /api/contatos/{id}
-    controller: App\Controller\ContatosController::buscarUmContato
-    methods: GET
-
-editarUmContato_API:
-    path: /api/contatos/{id}
-    controller: App\Controller\ContatosController::editarContato
-    methods: PUT
-
-excluirUmContato_API:
-    path: /api/contatos/{id}
-    controller: App\Controller\ContatosController::excluirContato
->>>>>>> d38097cbe6eec66dc1b0c4968db54a8135c2beca:config/routes.yaml
     methods: DELETE
