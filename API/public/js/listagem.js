@@ -4,7 +4,7 @@ import {excluir} from "./excluir.js";
 let tr = document.querySelector('#tr');
 
 listarContatos().then(conteudo=> {
-    console.log(conteudo)
+
     conteudo.conteudoResposta.forEach(i => {
 
         let tr2 = document.createElement('tr');
