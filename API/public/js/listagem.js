@@ -1,38 +1,38 @@
 import {listarContatos} from './fetcher.js';
-let div = document.querySelector('#contatos');
+
+let tr = document.querySelector('#tr');
 
 listarContatos().then(conteudo=> {
     if (!conteudo.sucesso)
         throw new Error('Falha ao carregar contatos');
     conteudo.conteudoResposta.forEach(i => {
 
-        let divRow = document.createElement('div');
-        divRow.classList.add('col-sm');
+        let tr2 = document.createElement('tr');
+        let thead = document.createElement('thead');
 
-        let ul = document.createElement('ul');
-        ul.classList.add('list-group');
+        let td = document.createElement('th');
+        td.classList.add('scope="col"');
 
-        let li = document.createElement('li');
-        li.classList.add('list-group-item','col', 'col-md-2' );
+        let td2 = document.createElement('th');
+        td2.classList.add('scope="col"');
+
+        let td3 = document.createElement('th');
+        td3.classList.add('scope="col"');
+
 
         let nome = document.createTextNode(i.nome);
         let email = document.createTextNode(i.email);
         let numero = document.createTextNode(i.numero);
 
-        let liEmail = document.createElement('li');
-        liEmail.classList.add('list-group-item','col', 'col-md-2' );
+        td.appendChild(nome);
+        td2.appendChild(email);
+        td3.appendChild(numero);
 
-        let ulEmail = document.createElement('ul');
-        ulEmail.classList.add('list-group');
+        tr.appendChild(thead);
+        thead.appendChild(tr2);
+        tr2.appendChild(td);
+        tr2.appendChild(td2);
+        tr2.appendChild(td3);
 
-        li.appendChild(nome);
-        ul.appendChild(li);
-        divRow.appendChild(ul);
-
-        div.appendChild(divRow);
-
-        console.log(i);
-        
-    })
-
+    });
 });
