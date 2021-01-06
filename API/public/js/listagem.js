@@ -3,6 +3,7 @@ import {listarContatos} from './fetcher.js';
 let tr = document.querySelector('#tr');
 
 listarContatos().then(conteudo=> {
+    console.log(conteudo.conteudoResposta);
     if (!conteudo.sucesso)
         throw new Error('Falha ao carregar contatos');
     conteudo.conteudoResposta.forEach(i => {
