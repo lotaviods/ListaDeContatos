@@ -1,11 +1,9 @@
 import { listarContatos } from './req/fetcher.js';
 import { excluir } from "./req/remove.js";
-
+const mensagem_erro = document.querySelector('#erro');
 const tr = document.querySelector('#tr');
 listarContatos().then(conteudo => {
     if (!conteudo.sucesso) {
-        let mensagem_erro = document.querySelector('#erro');
-
         mensagem_erro.innerHTML = `Ocorreu um erro ${conteudo.conteudoResposta.mensagem}`;
         mensagem_erro.classList.add('fade-in');
         mensagem_erro.classList.remove('invisible');
@@ -17,8 +15,19 @@ listarContatos().then(conteudo => {
             }, 5000);
         }, 5000);
     } else {
+       if (!conteudo.conteudoResposta.length){
+            mensagem_erro.innerHTML = `Não existe nenhum contato`
+            mensagem_erro.classList.add('fade-in');
+            mensagem_erro.classList.remove('invisible');
+        setTimeout(function () {
+            mensagem_erro.classList.remove('fade-in');
+            mensagem_erro.classList.add('fade-out');
+            setTimeout(function () {
+                mensagem_erro.classList.add('invisible');
+            }, 5000);
+        }, 5000);
+       }
         conteudo.conteudoResposta.forEach(i => {
-
             let tr2 = document.createElement('tr');
             tr2.id = `id_contato_${i.id}`
             let thead = document.createElement('thead');

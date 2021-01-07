@@ -1,5 +1,5 @@
 import { adiciona } from "./req/creator.js";
-
+const formCadastro = document.querySelector('[data-form]')
     formCadastro.addEventListener("submit", event => {
     event.preventDefault();
     const nome = event.target.querySelector('[data-nome]');
