@@ -1,5 +1,16 @@
-<ul>
-    <li>
-
-    </li>
-</ul>
+<div class="alert alert-danger" ng-show="message" ng-class="{fadein: transition, fadeout: !transition}">
+    <!-- Mensagem-->
+    {{message}}
+</div>
+<div class="container">
+    <table id="contatos">
+        <thead>
+            <tr class="table" id="contatos" ng-repeat="contato in contatos">
+                <th class="">{{contato.nome}}</th>
+                <th class="">{{contato.email}}</th>
+                <th class="">{{contato.numero}}</th>
+                <th><button type="button" class="btn-s btn-danger" ng-click="excluir(contato.id)">X</button></th>
+            </tr>
+        </thead>
+    </table>
+</div>
