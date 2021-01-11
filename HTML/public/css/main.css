@@ -8,21 +8,68 @@ body {
     background-color: #000000
 }
 .container {
-    width: 700px;
+    width: auto;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 150px;
+    margin-top: 15%;
+    background-color: #000000;
+    color: black;
+
 }
 .enviar_form{
-    margin-left: 100px;
+    margin-left: center;
     margin-right: auto;
 }
 .list-group-item{
     background-color: lightslategray;
 }
 #contatos{
-    width: 5000px;
-    margin-left: auto;
+    width:auto;
+    height: auto;
+    margin-left: 15%;
     margin-right: auto;
-    margin-top: 150px;
+    margin-top: 0px;
+    background: white;
+}
+.invisible{
+    visibility: hidden;
+}
+
+.fadeout {
+    animation: fadeout ease 0.5s;
+}
+@keyframes fadeout {
+    100% {opacity:0;}
+    0% {opacity:1;}
+}
+.fadein {
+    animation: fadeIn ease 0.5s;
+    -webkit-animation: fadeIn ease 0.5s;
+    -moz-animation: fadeIn ease 0.5s;
+    -o-animation: fadeIn ease 0.5s;
+    -ms-animation: fadeIn ease 0.5s;
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
 }
