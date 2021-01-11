@@ -1,11 +1,26 @@
-angular.module('main').controller('MainController', function ($scope, $http) {
+angular.module('main').controller('MainController', function ($scope, $http, $timeout) {
+
     $scope.titulo = "Lista de Contatos";
-    $scope.lista = []
+    $scope.contatos = [];
+    $scope.resp = {};
+    $scope.message = "";
 
     $http.get('http://localhost:8080/api/contatos', {
         method: 'GET'
-    }).then(resp =>{
-        $scope.lista = resp.data;
+    }).success(resp =>{
+        $scope.resp = resp;
+        $scope.contatos = $scope.resp.conteudoResposta;
+    }).error(resp =>{
+        $scope.message = resp.conteudoResposta.mensagem;
     })
-    console.log($scope.lista)
+    $scope.excluir = function(id){
+        //Criar service para refatorar.
+        //Criar função para apagar.
+        $scope.transition = true;
+        $scope.message = `Apagando id ${id}`;
+        $timeout(f=>{
+            $scope.transition = false;
+            $scope.message = '';
+        }, 5000)
+    }
 })
