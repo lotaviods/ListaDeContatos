@@ -1,9 +1,7 @@
 # ListaDeContatos
 
-## Lista de contatos utilizando API com Symfony
 
-
-# Instalação do projeto:
+## Instalação do projeto:
 
 -
         cd .\API\
@@ -14,7 +12,7 @@
 -
         npm install
 
-# Iniciando o projeto:
+### Iniciando o projeto:
 
 -
         php -S localhost:8080 -t .\API\public\
