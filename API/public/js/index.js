@@ -1,7 +1,8 @@
 import { listarContatos } from './req/fetcher.js';
 import { excluir } from "./req/remove.js";
+const  tbody = document.querySelector("#lista_contatos");
 const mensagem_erro = document.querySelector('#erro');
-const tr = document.querySelector('#tr');
+
 listarContatos().then(conteudo => {
     if (!conteudo.sucesso) {
         mensagem_erro.innerHTML = `Ocorreu um erro ${conteudo.conteudoResposta.mensagem}`;
@@ -28,49 +29,56 @@ listarContatos().then(conteudo => {
         }, 5000);
        }
         conteudo.conteudoResposta.forEach(i => {
-            let tr2 = document.createElement('tr');
-            tr2.id = `id_contato_${i.id}`
-            let thead = document.createElement('thead');
 
-            let td = document.createElement('th');
-            td.classList.add('scope="col"');
+            let tr =document.createElement("tr");
+            tr.id=`id_contato_${i.id}`;
+            tr.classList.add('contatos');
 
-            let td2 = document.createElement('th');
-            td2.classList.add('scope="col"');
+            let td = document.createElement('td');
 
-            let td3 = document.createElement('th');
-            td3.classList.add('scope="col"');
+            let td2 = document.createElement('td');
+
+            let td3 = document.createElement('td');
+
 
             let button = document.createElement('button');
-            button.classList.add('type="button"');
-            button.classList.add('class="btn');
-            button.classList.add('btn-danger');
+            button.classList.add('btn', 'btn-danger')
+
 
             let nome = document.createTextNode(i.nome);
             let email = document.createTextNode(i.email);
             let numero = document.createTextNode(i.numero);
-            let nomeDOBotao = document.createTextNode('X');
+            let nomeDoBotao = document.createTextNode('X');
 
             button.addEventListener("click", f => {
                 excluir(i.id).then(suc => {
                     let removido = document.querySelector(`#id_contato_${i.id}`)
-                    removido.remove();
+                    confirmacao(`#id_contato_${i.id}`);
+                    setTimeout(function (){
+                        removido.remove();
+                    },500)
+
                 });
 
             })
 
             td.appendChild(nome);
-            td2.appendChild(email);
-            td3.appendChild(numero);
-            button.appendChild(nomeDOBotao);
+            td2.appendChild(numero);
+            td3.appendChild(email);
+            button.appendChild(nomeDoBotao);
 
-            tr.appendChild(thead);
-            thead.appendChild(tr2);
-            tr2.appendChild(td);
-            tr2.appendChild(td2);
-            tr2.appendChild(td3);
-            tr2.appendChild(button);
-        })
+            tr.appendChild(td);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(button);
+
+            tbody.appendChild(tr);
+        });
     }
-})
+});
 
+function confirmacao(id) {
+    var resposta = confirm("Deseja remover esse registro?");
+    if (resposta == true) {
+    }
+}
