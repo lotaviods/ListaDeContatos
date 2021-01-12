@@ -3,8 +3,12 @@ angular.module("main", ['ngAnimate', 'ngRoute'])
     $locationProvider.html5Mode(true);
     $routeProvider.when('/', {
         templateUrl: 'partials/principal.html',
-        controller: 'MainController'
+        controller: 'IndexController'
     });
+    $routeProvider.when('/cadastro', {
+        templateUrl: 'partials/cadastro.html',
+        controller: 'CadastroController'
+    })
     $routeProvider.otherwise({
         redirectTo: '/'
     });
