@@ -3,10 +3,19 @@
 <h2> Listagem de contatos</h2>
 {% endblock %}
 {% block body %}
-<div>
-    <div id="contatos"></div>
-</div>
+
+  <table class="table" id="contatos">
+    <thead id="naoTemNada">
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Numero</th>
+      </tr>
+    </thead>
+    <tbody id="lista_contatos"></tbody>
+  </table>
+
 {% endblock %}
 {% block javascripts %}
-<script type="module" src="js/listagem.js"></script>
+<script type="module" src="js/index.js"></script>
 {% endblock %}

@@ -1,10 +1,11 @@
-{% extends 'base.html.twig' %}
-{% block Navbar %}
-    <h1>Tela de Cadastro</h1>
-{% endblock %}
-{% block body %}
 
-<form data-form>
+<!-- REFATORAR -->
+<div class="alert alert-danger" ng-show="message" ng-class="{fadein: transition, fadeout: !transition}">
+    <!-- Mensagem-->
+    {{message}}
+</div>
+
+<form>
     <div class="container">
         <div class="form-group">
               <div class="col col-sm-12 col-md-10">
@@ -33,12 +34,8 @@
             </div>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary enviar_form" >Enviar</button>
+            <button class="btn btn-primary enviar_form" ng-click="cadastrar()">Enviar</button>
+            <button class="btn btn-primary enviar_form" ng-click="inicio()">Voltar</button>
         </div>
     </div>
 </form>
-{% endblock %}
-{% block javascripts %}
-<script type="module" src="js/cadastro.js"></script>
-{% endblock %}
-

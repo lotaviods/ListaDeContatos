@@ -67,7 +67,9 @@ class ContatosController
         $this->entityManager->persist($entidade);
 
         $this->entityManager->flush();
-        return new JsonResponse($entidade);
+
+        $responseFactory = new ResponseFactory(true,$entidade,Response::HTTP_CREATED);
+        return $responseFactory->getResponse();
     }
     
     public function buscarContatos(Request $request): Response
@@ -118,8 +120,9 @@ class ContatosController
         $cacheItem = $this->cache->getItem($this->cacher->cachePrefix() . $id);
         $cacheItem->set($entidadeExistente);
         $this->cache->save($cacheItem);
-       
-        return new JsonResponse($entidadeExistente);
+
+        $responseFactory = new ResponseFactory(true,$entidadeExistente,Response::HTTP_OK);
+        return $responseFactory->getResponse();
     }
 
    public function excluirContato(int $id): Response
