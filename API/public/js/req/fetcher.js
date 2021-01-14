@@ -1,5 +1,5 @@
-export function listarContatos(){
-    return fetch('http://localhost:8080/api/contatos/',{
+export function listarContatos(num = "1"){
+    return fetch(`http://localhost:8080/api/contatos/?page=${num}`,{
         method: 'GET'
     })
     .then(resp=> {
@@ -8,3 +8,6 @@ export function listarContatos(){
         return json;
     })
 }
+
+
+

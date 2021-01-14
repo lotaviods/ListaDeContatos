@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block Navbar %}
-<h2> Listagem de contatos</h2>
+<h2 id="tituloIndex"> Listagem de contatos</h2>
 {% endblock %}
 {% block body %}
 
@@ -14,6 +14,17 @@
     </thead>
     <tbody id="lista_contatos"></tbody>
   </table>
+
+  <span>
+    <nav id="paginacao">
+  <ul class="pagination">
+
+
+
+  </ul>
+</nav>
+  </span>
+
 
 {% endblock %}
 {% block javascripts %}

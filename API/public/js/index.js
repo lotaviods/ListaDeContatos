@@ -5,55 +5,94 @@ const  tbody = document.querySelector("#lista_contatos");
 const mensagem_erro = document.querySelector('#erro');
 let naoTemNada = document.querySelector("#naoTemNada");
 
-listarContatos().then(conteudo => {
+listarContatos().then(paginacao =>{
 
-    existeConteudo(conteudo);
-    conteudo.conteudoResposta.forEach(i => {
+        let totalPage = Math.ceil(paginacao.quandidaDeContatos / paginacao.itensPorPagina )
 
-        let tr = createElement('tr');
-        addId(tr,`id_contato_${i.id}`);
-        addClasse(tr,['contatos']);
+        for (let i=1; i<= totalPage;i++) {
+            let pagination = document.querySelector('.pagination')
 
-        let td = createElement('td');
-        let td2 = createElement('td');
-        let td3 = createElement('td');
+            let li = createElement('li');
+            addClasse(li, ['page-item']);
+            addId(li, i);
 
-        let button = createElement('button');
-        addId(button,"botao");
-        addClasse(button,['btn', 'btn-danger']);
+            let a = createElement('a')
+            addClasse(a, ['page-link']);
+            a.appendChild(createText(i));
 
-        button.addEventListener("click", f => {
-            excluir(i.id).then(suc => {
-                let removido = document.querySelector(`#id_contato_${i.id}`)
-                confirmacao(`#id_contato_${i.id}`);
-                addClasse(removido,['apaga']);
-                console.log(removido);
+            addNoElement(li, a);
+            addNoElement(pagination, li);
 
-                setTimeout(function (){
-                    removido.remove();
-                },500)
+            let idLi = document.getElementById(i);
 
+
+            idLi.addEventListener("click", function (){
+                    if (tbody == null) {
+                        return;
+                    }
+                        listarContatos(i).then(conteudo => {
+
+                            existeConteudo(conteudo);
+                            conteudo.conteudoResposta.forEach(i => {
+
+                                let tr = createElement('tr');
+                                addId(tr, `id_contato_${i.id}`);
+                                addClasse(tr, ['contatos']);
+
+                                let td = createElement('td');
+                                let td2 = createElement('td');
+                                let td3 = createElement('td');
+
+                                let buttonExcluir = createElement('button');
+                                addId(buttonExcluir, "botaoExcluir");
+                                addClasse(buttonExcluir, ['btn', 'btn-danger']);
+
+                                let buttonEditar = createElement('button');
+                                addId(buttonEditar, "botaoEditar");
+                                addClasse(buttonEditar, ['btn', 'btn-primary']);
+
+                                buttonExcluir.addEventListener("click", f => {
+                                    let retornoConfirmacao = confirmacao()
+                                    console.log(retornoConfirmacao);
+                                    if (retornoConfirmacao) {
+                                        excluir(i.id).then(suc => {
+                                            let removido = document.querySelector(`#id_contato_${i.id}`)
+
+                                            addClasse(removido, ['apaga']);
+                                            console.log(removido);
+                                            setTimeout(function () {
+                                                removido.remove();
+                                            }, 500)
+                                        });
+                                    }
+                                });
+
+                                td.appendChild(createText(i.nome));
+                                td2.appendChild(createText(i.email));
+                                td3.appendChild(createText(i.numero));
+                                buttonExcluir.appendChild(createText("X"));
+                                buttonEditar.appendChild(createText("Edit"))
+
+
+                                addNoElement(tr, td);
+                                addNoElement(tr, td2);
+                                addNoElement(tr, td3);
+                                addNoElement(tr, buttonExcluir);
+                                addNoElement(tr, buttonEditar);
+                                console.log(tr);
+                                addNoElement(tbody, tr)
+                            });
+                        });
             });
-        });
-
-        td.appendChild(createText(i.nome));
-        td2.appendChild(createText(i.email));
-        td3.appendChild(createText(i.numero));
-        button.appendChild(createText("X"));
-
-        addNoElement(tr,td);
-        addNoElement(tr,td2);
-        addNoElement(tr,td3);
-
-        addNoElement(tr,button);
-
-        addNoElement(tbody,tr);
-    });
+        }
 });
 
-function confirmacao(id) {
-    var resposta = confirm(`Deseja remover o esse contato?`);
-    if (resposta == true) {
+
+function confirmacao() {
+    if (confirm('Excluir esse contato?')) {
+        return true;
+    }else{
+        return false;
     }
 }
 
@@ -109,3 +148,4 @@ function existeConteudo(conteudo) {
         }
     }
 }
+

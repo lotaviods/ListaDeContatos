@@ -21,7 +21,7 @@ body {
     background-color: lightslategray;
 }
 #contatos{
-    width:480px;
+    width:1300px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 0px;
@@ -69,10 +69,29 @@ body {
     0% {opacity:0;}
     100% {opacity:1;}
 }
-#botao{
+#botaoExcluir{
     margin-top: 7px!important;
+}
+#botaoEditar{
+    margin-top: 7px!important;
+    margin-left: 5px !important;
 }
 .apaga{
     opacity: 0;
     transition: 0.5s;
+}
+#tituloIndex{
+    width:1300px;
+    margin-left: 500px;
+    margin-right: auto;
+    margin-top: 0px;
+    color: red !important;
+}
+#paginacao{
+    width:1500px;
+    margin-left: 550px;
+    margin-right: auto;
+    margin-top: 0px;
+    color: red !important;
+    background-color: black !important;
 }

@@ -80,12 +80,14 @@ class ContatosController
 
         [$paginaAtual, $itensPorPagina] = $this->extratorRequest->infoPaginacao($request);
         try{
+            $qntd = count($this->repository->findAll());
             $lista = $this->repository->findBy($filtro, $ordenacao,$itensPorPagina,($paginaAtual-1)* $itensPorPagina);
+
         }catch (ConnectionException $error){
             throw new AppError('Erro ao se conectar ao banco de dados, verifique a existencia do mesmo');
         }
 
-        $responseFactory = new ResponseFactory(true, $lista, Response::HTTP_OK, $paginaAtual, $itensPorPagina);
+        $responseFactory = new ResponseFactory(true, $lista, Response::HTTP_OK, $qntd, $paginaAtual, $itensPorPagina);
 
         return $responseFactory->getResponse();
     }
